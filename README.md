@@ -1,38 +1,65 @@
-# Brute-LI Scanner 🔍
+# 🔍 Brute-LI Scanner
 
-A powerful **Playwright-based** web scraping and URL enumeration tool that combines 
-dynamic JavaScript scraping with concurrent URL status checking.
+**Advanced Endpoint Discovery Tool for Security Researchers & Web Penetration Testers**
 
-## 🎯 What It Does
+A powerful **Playwright-based** reconnaissance tool that discovers hidden URLs, API endpoints, and internal resources through dynamic JavaScript analysis and intelligent status code detection.
 
-Brute-LI Scanner is designed to **discover hidden URLs and endpoints** on websites by:
+---
 
-1. **Dynamic JavaScript Analysis** - Executes JavaScript in the browser to capture dynamically loaded URLs and scripts
-2. **Smart URL Extraction** - Finds URLs embedded in:
-   - HTML content
-   - JavaScript files (both inline and external)
-   - Dynamically injected scripts (using MutationObserver)
-3. **Intelligent Status Checking** - Verifies each discovered URL with:
-   - Accurate HTTP status codes
-   - Real response body content length
-   - Smart 403 detection (distinguishes between actual blocks and accessible pages)
-4. **Domain Filtering** - Keeps results within target domain using registered domain extraction
-5. **Deduplication** - Maintains a persistent URL database to avoid re-scanning
+## 🎯 Purpose
 
-## ✨ Key Features
+Brute-LI Scanner is designed for **authorized security testing**, bug bounty hunting, and penetration testing to:
 
-- 🌐 **Playwright Browser Automation** - Uses headless Chromium for accurate page rendering
-- 🔐 **WAF/Bot Bypass** - Rotates user agents and headers to avoid detection
-- ⚡ **Real Content Retrieval** - Captures actual response bodies, not just headers
-- 🎨 **Colored Output** - Color-coded status codes for quick visual scanning
-  - 🟢 Green: 200-299 (Success)
-  - 🟡 Yellow: 300-399 (Redirects) & 403 with content
-  - 🔴 Red: Errors & 403 blocks
-  - 🟣 Magenta: 404 (Not Found)
-  - 🔵 Cyan: Other status codes
-- 📊 **Performance Metrics** - Shows content length for each URL
-- 💾 **Persistent Storage** - Appends new URLs to `urls.txt` (avoids duplicates)
+- 🕵️ **Discover hidden endpoints** that aren't visible in static HTML
+- 🔓 **Identify API routes** and internal microservices
+- 📄 **Uncover configuration files** (JSON, XML, .env, etc.)
+- 🔗 **Map internal architecture** and subdomain variations
+- 📊 **Enumerate all reachable resources** within a target domain
+
+---
+
+## ⚡ Key Features
+
+### **Dynamic JavaScript Execution**
+- Executes JavaScript in real browser context (Chromium)
+- Captures URLs from dynamically loaded content
+- Monitors DOM mutations for injected scripts using MutationObserver
+- Detects single-page application (SPA) routes
+
+### **Smart Endpoint Discovery**
+Finds URLs embedded in:
+- HTML source code
+- Inline JavaScript
+- External JavaScript files (with recursive fetching)
+- API responses and JSON data
+- Dynamically injected scripts
+- Shadow DOM elements
+
+### **Intelligent Status Detection**
+- **Accurate HTTP status codes** from real page navigation
+- **Content-aware 403 detection** - distinguishes between actual blocks and accessible pages
+- **Real response body analysis** - no guessing with headers alone
+- **Smart error handling** with proper timeout and retry logic
+
+### **Security-Focused Features**
+- 🔐 **Header rotation** - Random User-Agent and Accept-* headers per request
+- 🛡️ **WAF-aware scanning** - Polite delays between requests to avoid triggering WAF rules
+- 🌐 **Domain filtering** - Automatically filters results to target domain only
+- 📊 **Deduplication** - Maintains persistent list to avoid re-testing
+- ⏱️ **Configurable timeouts** - Fine-tune scanning behavior
+
+### **Penetration Tester Friendly**
+- 🎨 **Color-coded output** - Quick visual scanning of results
+  - 🟢 **Green (200-299)**: Accessible resources
+  - 🟡 **Yellow (300-399 & 403 with content)**: Redirects & potentially accessible pages
+  - 🔴 **Red (403 blocks & errors)**: Blocked resources
+  - 🟣 **Magenta (404)**: Not found
+  - 🔵 **Cyan (other)**: Other status codes
+- 📁 **Persistent output** - Saves results to `urls.txt` with automatic deduplication
+- 📈 **Content-length reporting** - Shows actual response size for each URL
 - ⏱️ **Configurable Timeouts** - Adjust scanning duration and request delays
+
+---
 
 ## 🛠️ How It Works
 
@@ -61,6 +88,11 @@ Brute-LI Scanner is designed to **discover hidden URLs and endpoints** on websit
 
 ## 🚀 Installation
 
+### **Prerequisites**
+- Python 3.7 or higher
+- pip package manager
+
+### **Setup**
 ```bash
 # Clone the repository
 git clone https://github.com/57ayush76/brute-li.git
@@ -71,3 +103,10 @@ pip install -r requirements.txt
 
 # Install Playwright browsers
 playwright install chromium
+
+# Run the tool
+python3 brute-li.py
+
+# Enter target URL when prompted
+Enter URL to scan: https://example.com
+
